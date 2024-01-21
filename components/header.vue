@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center gap-24 px-[6rem] border h-[4rem]">
+  <div class="flex justify-between items-center gap-24 px-[6rem] border h-[4rem] w-full">
     <img src="/logo.svg" alt="">
     <div class="flex gap-8">
       <a href="#">Home</a>
