@@ -14,18 +14,11 @@ watch(x,()=>{
   console.log(x.value)
   console.log(hitungOpacity.value)
 },)
-
-
-// console.log(isMobile.value)
-// watch(width, () => {
-//   console.log(width.value)
-// })
-
 </script>
 
 <template>
   <div class="py-[10rem] flex flex-col md:flex-row sm:flex-col items-center justify-start relative gap-6">
-    <div class="flex items-center space-x-3 absolute lg:left-[35%] md:left-[30%] right-[1.5rem] md:top-[65%] lg:top-[73%] top-[-2rem]" id="slideLeft" :style="{opacity: hitungOpacity + '%'}">
+    <div class="flex items-center space-x-3 absolute lg:left-[35%] md:left-[30%] right-[2rem] md:top-[65%] lg:top-[73%] top-[-2rem]" id="slideLeft" :style="{opacity: hitungOpacity + '%'}">
       <Icon name="material-symbols:chevron-left-rounded" />
       <p>Swipe ke kiri</p>
     </div>
@@ -71,7 +64,7 @@ watch(x,()=>{
     transform: translateX(0);
   }
   50% {
-    transform: translateX(-10px);
+    transform: translateX(-4px);
   }
   100% {
     transform: translateX(0);    
