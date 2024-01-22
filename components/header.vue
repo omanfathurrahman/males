@@ -24,7 +24,7 @@ watch(y, () => {
 
 <template>
   <div
-    class="flex justify-between items-center gap-24 px-[2rem] md:px-[6rem] border h-[4rem] w-full backdrop-blur-sm bg-opacity-50 fixed top-0 z-20 bg-white">
+    class="flex justify-between items-center gap-24 px-[2rem] md:px-[6rem] border h-[4rem] w-full backdrop-blur-sm bg-opacity-20 fixed top-0 z-50 bg-white">
     <img src="/logo.svg" alt="">
 
     <div class="relative" v-show="isMobile">

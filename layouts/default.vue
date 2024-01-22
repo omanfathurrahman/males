@@ -1,6 +1,6 @@
 
 <template>
-  <div class="overflow-x-hidden overflow-y-auto relative" ref="el">
+  <div class="relative overflow-hidden">
     <Header />
     <slot/>
     <Footer />
