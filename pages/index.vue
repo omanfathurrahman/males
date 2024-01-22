@@ -1,3 +1,4 @@
+
 <template>
   <div class="">
     <HomePerkenalan />
@@ -6,4 +7,3 @@
     <HomeDaftarMapel />
   </div>
 </template>
-

@@ -1,14 +1,8 @@
-<script setup lang="ts">
-
-const el = ref<HTMLElement | null>(null)
-const { x, y } = useScroll(el)
-
-</script>
 
 <template>
-  <div class="overflow-hidden relative">
+  <div class="overflow-x-hidden overflow-y-auto relative" ref="el">
     <Header />
-    <slot ref="el" />
+    <slot/>
     <Footer />
   </div>
 </template>
