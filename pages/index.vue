@@ -3,6 +3,7 @@
     <HomePerkenalan />
     <HomeFiturUnggulan />
     <HomeKutipanInspiratif />
+    <HomeDaftarMapel />
   </div>
 </template>
 

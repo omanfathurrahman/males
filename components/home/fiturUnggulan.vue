@@ -1,7 +1,10 @@
 <template>
-  <div class="flex flex-col items-center py-[6rem] gap-6 px-[8rem]" >
-    <h3 class="flex gap-2.5 items-start text-3xl">Mengapa Memilih <span><img src="/logo.svg" class="h-8" alt=""></span>?</h3>
-    <div class="grid grid-cols-3 gap-x-5 gap-y-3">
+  <div class="flex flex-col items-center py-[6rem] gap-6 px-[1rem] sm:px-[8rem]" >
+    <div class="sm:flex-row flex flex-col items-center gap-2.5 sm:items-start text-3xl">
+      <span>Mengapa Memilih </span>
+      <div class="flex gap-2"><img src="/logo.svg" class="h-8" alt=""><span>?</span></div>
+    </div>
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3">
       <div class="border shadow-m rounded-2xl px-5 py-3">
         <Icon name="tabler:pig-money" class="text-4xl mb-1 text-green-500" />
         <h4 class="text-lg font-medium">Akses Gratis ke Konten Belajar</h4>
