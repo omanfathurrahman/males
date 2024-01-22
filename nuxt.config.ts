@@ -6,6 +6,11 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@vueuse/nuxt",
     "@pinia/nuxt",
+    "@nuxtjs/google-fonts",
   ],
-  
+  googleFonts: {
+    families: {
+      Montserrat: true,
+    }
+  }
 })

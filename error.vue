@@ -18,7 +18,7 @@ onMounted(() => {
     <div class="bg-default h-[103vh] absolute w-screen -z-10"></div>
     <Header />
     <ErrorPageNotFound v-if="errorStatusCode == '404'" />
-    <Footer />
+    <Footer class="fixed bottom-0" />
   </div>
 </template>
 

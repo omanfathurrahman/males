@@ -5,3 +5,9 @@
     </NuxtLayout>
   </div>
 </template>
+
+<style>
+html {
+  font-family: "calibri";
+}
+</style>
