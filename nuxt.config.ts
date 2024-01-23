@@ -12,5 +12,6 @@ export default defineNuxtConfig({
     families: {
       Montserrat: true,
     }
-  }
+  },
+  plugins: ["~/plugins/preline.client.ts"],
 })

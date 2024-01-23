@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
+  content: [
+    './node_modules/preline/preline.js',
+  ],
   theme: {
     extend: {
       colors: {
@@ -8,9 +10,8 @@ export default {
       }
     },
   },
-  plugins: [require('daisyui')],
-  daisyui: {
-    themes: false,
-  }
+  plugins: [
+    require('preline/plugin'),
+  ]
 }
 

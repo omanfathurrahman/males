@@ -20,7 +20,7 @@
 
 <style scoped>
 .slide-top {
-	animation: slide-top 6s infinite alternate both ;
+	animation: slide-top 4000ms infinite alternate both ;
 }
 
 @keyframes slide-top {
