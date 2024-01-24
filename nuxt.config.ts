@@ -14,7 +14,8 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxtjs/google-fonts",
     "@nuxtjs/supabase",
-    "@nuxt/content"
+    "@nuxt/content",
+    "@nuxthq/studio"
   ],
   googleFonts: {
     families: {
