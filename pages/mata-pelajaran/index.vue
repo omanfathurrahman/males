@@ -27,7 +27,7 @@ const semuaMapel = await semuaMataPelajaran()
       <p>Pilih mata pelajaran yang menarik dan bermanfaat untuk masa depanmu!</p>
     </div>
     <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3">
-      <div class="border shadow-m rounded-2xl px-5 py-3 cursor-pointer" v-for="mapel of semuaMapel" :key="mapel.id" @click="navigateTo(`/mata-pelajaran/${mapel.nama}`)">
+      <div class="border shadow-m rounded-2xl px-5 py-3 cursor-pointer" v-for="mapel of semuaMapel" :key="mapel.id" @click="navigateTo(`/mata-pelajaran/${mapel.nama.toLowerCase()}`)">
         <Icon :name="mapel.icon!" class="text-4xl mb-1" :style="{'color': mapel.tailwind_color!}" />
         <h4 class="text-xl font-medium">{{ mapel.nama }}</h4>
         <p class="text-sm">{{ mapel.deskripsi }}</p>
