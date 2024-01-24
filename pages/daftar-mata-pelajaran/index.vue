@@ -3,7 +3,6 @@ useHead({
   title: 'Mata Pelajaran | Males',
 })
 import type { Database, Tables, Enums } from '~/types/database.types'
-import randomColorTailwind from '~/utils/random-color-tailwind'
 const client = useSupabaseClient<Database>();
 
 const semuaMataPelajaran = async () => {
@@ -15,7 +14,6 @@ const semuaMataPelajaran = async () => {
     console.log(error);
   }
 }
-const warna = randomColorTailwind()
 const semuaMapel = await semuaMataPelajaran()
 
 </script>

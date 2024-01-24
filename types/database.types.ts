@@ -9,6 +9,35 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      bab: {
+        Row: {
+          id: number
+          judul: string
+          kelas: Database["public"]["Enums"]["kelas"]
+          mata_pelajaran_id: number
+        }
+        Insert: {
+          id?: number
+          judul: string
+          kelas: Database["public"]["Enums"]["kelas"]
+          mata_pelajaran_id: number
+        }
+        Update: {
+          id?: number
+          judul?: string
+          kelas?: Database["public"]["Enums"]["kelas"]
+          mata_pelajaran_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bab_mata_pelajaran_id_fkey"
+            columns: ["mata_pelajaran_id"]
+            isOneToOne: false
+            referencedRelation: "mata_pelajaran"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       mata_pelajaran: {
         Row: {
           deskripsi: string
@@ -33,57 +62,28 @@ export interface Database {
         }
         Relationships: []
       }
-      muatan_pelajaran: {
+      sub_bab: {
         Row: {
+          bab_id: number
           id: number
           judul: string
-          kelas: Database["public"]["Enums"]["kelas"]
-          mata_pelajaran_id: number
         }
         Insert: {
+          bab_id: number
           id?: number
           judul: string
-          kelas: Database["public"]["Enums"]["kelas"]
-          mata_pelajaran_id: number
         }
         Update: {
+          bab_id?: number
           id?: number
           judul?: string
-          kelas?: Database["public"]["Enums"]["kelas"]
-          mata_pelajaran_id?: number
         }
         Relationships: [
           {
-            foreignKeyName: "muatan_pelajaran_mata_pelajaran_id_fkey"
-            columns: ["mata_pelajaran_id"]
+            foreignKeyName: "sub_bab_bab_id_fkey"
+            columns: ["bab_id"]
             isOneToOne: false
-            referencedRelation: "mata_pelajaran"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      sub_muatan_pelajaran: {
-        Row: {
-          id: number
-          judul: string
-          muatan_pelajaran_id: number
-        }
-        Insert: {
-          id?: number
-          judul: string
-          muatan_pelajaran_id: number
-        }
-        Update: {
-          id?: number
-          judul?: string
-          muatan_pelajaran_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "sub_muatan_pelajaran_muatan_pelajaran_id_fkey"
-            columns: ["muatan_pelajaran_id"]
-            isOneToOne: false
-            referencedRelation: "muatan_pelajaran"
+            referencedRelation: "bab"
             referencedColumns: ["id"]
           }
         ]
