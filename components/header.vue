@@ -36,12 +36,12 @@ watch(y, () => {
       <div
         class="flex flex-col absolute bg-white space-y-1 w-[12rem] shadow-lg rounded-md overflow-hidden py-2 px-2 transition-all duration-300 ease-in-out top-14"
         :class="showNav ? 'right-1' : 'right-[-20rem]'" ref="target">
-        <button @click="navigateTo('/')" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Home</button>
-        <button @click="navigateTo('/daftar-mata-pelajaran')"
+        <button @click="[navigateTo('/'), closeNav()]" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Home</button>
+        <button @click="[navigateTo('/daftar-mata-pelajaran'), closeNav()]"
           class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Mapel</button>
-        <button @click="navigateTo('/latihan-soal')" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Latihan
+        <button @click="[navigateTo('/latihan-soal'), closeNav()]" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Latihan
           Soal</button>
-        <button @click="navigateTo('/tentang-kami')" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Tentang
+        <button @click="[navigateTo('/tentang-kami'), closeNav()]" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Tentang
           kami</button>
       </div>
     </div>
