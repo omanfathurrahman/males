@@ -33,6 +33,61 @@ export interface Database {
         }
         Relationships: []
       }
+      muatan_pelajaran: {
+        Row: {
+          id: number
+          judul: string
+          kelas: Database["public"]["Enums"]["kelas"]
+          mata_pelajaran_id: number
+        }
+        Insert: {
+          id?: number
+          judul: string
+          kelas: Database["public"]["Enums"]["kelas"]
+          mata_pelajaran_id: number
+        }
+        Update: {
+          id?: number
+          judul?: string
+          kelas?: Database["public"]["Enums"]["kelas"]
+          mata_pelajaran_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "muatan_pelajaran_mata_pelajaran_id_fkey"
+            columns: ["mata_pelajaran_id"]
+            isOneToOne: false
+            referencedRelation: "mata_pelajaran"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      sub_muatan_pelajaran: {
+        Row: {
+          id: number
+          judul: string
+          muatan_pelajaran_id: number
+        }
+        Insert: {
+          id?: number
+          judul: string
+          muatan_pelajaran_id: number
+        }
+        Update: {
+          id?: number
+          judul?: string
+          muatan_pelajaran_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sub_muatan_pelajaran_muatan_pelajaran_id_fkey"
+            columns: ["muatan_pelajaran_id"]
+            isOneToOne: false
+            referencedRelation: "muatan_pelajaran"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -41,7 +96,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      kelas: "10" | "11" | "12"
     }
     CompositeTypes: {
       [_ in never]: never
