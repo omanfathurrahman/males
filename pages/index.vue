@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <div class="">
@@ -17,6 +16,12 @@
     <HomeDaftarMapel />
   </div>
 </template>
+
+<script setup>
+useHead({
+  title: "Males"
+})
+</script>
 
 <style scoped>
 .slide-top {
