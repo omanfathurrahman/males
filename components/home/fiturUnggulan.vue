@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center py-[6rem] gap-6 px-[1rem] sm:px-[8rem]" >
+  <div class="flex flex-col items-center py-[6rem] gap-6" >
     <div class="sm:flex-row flex flex-col items-center gap-2.5 sm:items-start text-3xl">
       <span>Mengapa Memilih </span>
       <div class="flex gap-2"><img src="/logo.svg" class="h-8" alt=""><span>?</span></div>

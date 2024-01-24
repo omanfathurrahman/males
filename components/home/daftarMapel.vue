@@ -22,7 +22,7 @@ watch(x,()=>{
       <Icon name="material-symbols:chevron-left-rounded" />
       <p>Swipe ke kiri</p>
     </div>
-    <div class="lg:px-[10rem] md:px-[3rem] px-[1rem] w-[90%] md:w-[50%] lg:w-[55%] transition-all text-center sm:text-start" :style="{opacity: hitungOpacity + '%'}">
+    <div class=" w-[90%] md:w-[45%] lg:w-[43%] transition-all text-center sm:text-start" :style="{opacity: hitungOpacity + '%'}">
       <h2 class="text-3xl">Daftar Mata Pelajaran</h2>
       <p>Apa yang kamu sukai? Apakah kamu tertarik pada ilmu alam, matematika, bahasa, seni, atau olahraga? Pilihlah mata pelajaran yang sesuai dengan minatmu agar belajar menjadi lebih menyenangkan.</p>
     </div>

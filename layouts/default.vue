@@ -2,7 +2,7 @@
 <template>
   <div class="relative overflow-hidden">
     <Header />
-    <slot/>
+    <slot class=""/>
     <Footer />
   </div>
 </template>

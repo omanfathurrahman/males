@@ -37,7 +37,7 @@ watch(y, () => {
         class="flex flex-col absolute bg-white space-y-1 w-[12rem] shadow-lg rounded-md overflow-hidden py-2 px-2 transition-all duration-300 ease-in-out top-14"
         :class="showNav ? 'right-1' : 'right-[-20rem]'" ref="target">
         <button @click="navigateTo('/')" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Home</button>
-        <button @click="navigateTo('/mata-pelajaran')"
+        <button @click="navigateTo('/daftar-mata-pelajaran')"
           class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Mapel</button>
         <button @click="navigateTo('/latihan-soal')" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Latihan
           Soal</button>
@@ -48,7 +48,7 @@ watch(y, () => {
 
     <div class="flex gap-8" v-show="!isMobile">
       <button @click="navigateTo('/')">Home</button>
-      <button @click="navigateTo('/mata-pelajaran')">Mapel</button>
+      <button @click="navigateTo('/daftar-mata-pelajaran')">Mapel</button>
       <button @click="navigateTo('/latihan-soal')">Latihan Soal</button>
       <button @click="navigateTo('/tentang-kami')">Tentang Kami</button>
     </div>
