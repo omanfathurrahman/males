@@ -44,6 +44,7 @@ export interface Database {
           icon: string | null
           id: number
           nama: string
+          path: string | null
           tailwind_color: string
         }
         Insert: {
@@ -51,6 +52,7 @@ export interface Database {
           icon?: string | null
           id?: number
           nama: string
+          path?: string | null
           tailwind_color?: string
         }
         Update: {
@@ -58,6 +60,7 @@ export interface Database {
           icon?: string | null
           id?: number
           nama?: string
+          path?: string | null
           tailwind_color?: string
         }
         Relationships: []

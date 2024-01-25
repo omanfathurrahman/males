@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col overflow-hidden">
-    <Header />
-    <div class="flex flex-col md:flex-row min-h-[91vh]">
+    <div class="flex flex-col md:flex-row min-h-screen">
       <div class="w-screen md:w-fit">
         <BelajarSidebar class="md:w-[18rem] sticky top-0 w-screen" />
       </div>
@@ -10,7 +9,7 @@
         <slot />
       </div>
     </div>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
