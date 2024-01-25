@@ -16,7 +16,7 @@ onMounted(() => {
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center overflow-hidden relative">
     <div class="bg-default h-[103vh] absolute w-screen -z-10"></div>
-    <Header />
+    <Header class="fixed top-0 z-50" />
     <ErrorPageNotFound v-if="errorStatusCode == '404'" />
     <Footer class="fixed bottom-0" />
   </div>

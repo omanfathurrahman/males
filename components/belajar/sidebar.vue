@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col bg-slate-100 px-8 py-3 divide-y-2 space-y-4 z-10" :class="{'h-full': (showNavBelajar || !isMobile) }">
+  <div class="flex flex-col bg-slate-100 px-8 py-3 divide-y-2 space-y-4 z-10" :class="{ 'h-full': (showNavBelajar || !isMobile) }">
     <div class="flex md:flex-col flex-col gap-5 mt-3 md:mt-6">
-      <NuxtLink>
+      <NuxtLink to="/">
         <img src="/logo.svg" />
       </NuxtLink>
       <div class="flex gap-5 items-center">
@@ -9,9 +9,34 @@
           <Icon name="ci:hamburger-lg" class="text-lg" />
         </button>
         <div class="flex items-center gap-1">
-          <h1 class="text-xl font-semibold">{{ curMapel?.nama }}</h1>
-          <p>/</p>
-          <h2>{{  }}</h2>
+          <h1 class="text-base font-light">
+            <span 
+              class="cursor-pointer"
+              @click="[
+                navigateTo(`/daftar-mata-pelajaran/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}`),
+                showNavBelajar = false,
+                gantiBab(''),
+                gantiSubbab('')
+              ]"
+              >{{ curMapel?.nama }}</span> / 
+            <span 
+              :class="curBaborSubbab[1] == '' ? 'font-semibold':'cursor-pointer'"
+              @click="
+                curBaborSubbab[1] != '' ? [
+                  navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(curBaborSubbab[0].toLowerCase())}`),
+                  showNavBelajar = false,
+                  gantiBab(curBaborSubbab[0]),
+                  gantiSubbab('')
+                ]: null"
+            >
+              {{ curBaborSubbab[0] }}
+            </span> 
+            <span v-if="curBaborSubbab[1] != ''"> / <br> 
+              <span class="font-semibold">
+                {{ curBaborSubbab[1] }}
+              </span>
+            </span>
+          </h1>
         </div>
       </div>
     </div>
@@ -20,17 +45,32 @@
         <h3 class="font-light">Kelas 10</h3>
         <div class="flex flex-col gap-2" v-if="babPerKelas['10']">
           <div class="" v-for="bab in babPerKelas['10']">
-            <button @click="[navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`), showNavBelajar = false]"
-              class="hover:text-primary text-lg font-medium" :class="{'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1}">{{ bab.judul }}</button>
+            <button 
+              @click="[
+                navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`),
+                showNavBelajar = false,
+                gantiBab(bab.judul),
+                gantiSubbab('')
+              ]"
+              class="hover:text-primary text-lg font-medium" 
+              :class="{ 'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1 }"
+              >
+              {{ bab.judul }}
+            </button>
             <div class="ml-2 flex flex-col mt-0.5 gap-1">
               <button
                 class="hover:text-primary text-start" 
-                :class="{'text-primary': route.params.bab[1] == replaceSpacesWithDash(subbab.judul.toLowerCase())}" 
-                @click="[navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`), showNavBelajar = false]" 
+                :class="{ 'text-primary': route.params.bab[1] == replaceSpacesWithDash(subbab.judul.toLowerCase()) }" 
+                @click="[
+                  navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`),
+                  showNavBelajar = false,
+                  gantiBab(bab.judul),
+                  gantiSubbab(subbab.judul)
+                ]" 
                 v-for="subbab in bab.sub_bab" 
                 :key="subbab.judul"
                 >
-                {{ subbab.judul}}
+                {{ subbab.judul }}
               </button>
             </div>
           </div>
@@ -40,17 +80,27 @@
         <h3 class="font-light">Kelas 11</h3>
         <div class="flex flex-col gap-2" v-if="babPerKelas['11']">
           <div class="" v-for="bab in babPerKelas['11']">
-            <button @click="[navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`), showNavBelajar = false]"
-              class="hover:text-primary text-lg font-medium" :class="{'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1}">{{ bab.judul }}</button>
+            <button 
+              @click="[navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`),
+              showNavBelajar = false,
+              gantiBab(bab.judul),
+              gantiSubbab('')
+              ]"
+              class="hover:text-primary text-lg font-medium" :class="{ 'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1 }">{{ bab.judul }}</button>
             <div class="ml-2 flex flex-col mt-0.5 gap-1">
               <button
                 class="hover:text-primary text-start" 
-                :class="{'text-primary': route.params.bab[1] == replaceSpacesWithDash(subbab.judul.toLowerCase())}" 
-                @click="[navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`), showNavBelajar = false]" 
+                :class="{ 'text-primary': route.params.bab[1] == replaceSpacesWithDash(subbab.judul.toLowerCase()) }" 
+                @click="[
+                  navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`),
+                  showNavBelajar = false,
+                  gantiBab(subbab.judul),
+                  gantiSubbab(subbab.judul)
+                ]" 
                 v-for="subbab in bab.sub_bab" 
                 :key="subbab.judul"
                 >
-                {{ subbab.judul}}
+                {{ subbab.judul }}
               </button>
             </div>
           </div>
@@ -60,17 +110,32 @@
         <h3 class="font-light">Kelas 12</h3>
         <div class="flex flex-col gap-2" v-if="babPerKelas['12']">
           <div class="" v-for="bab in babPerKelas['12']">
-            <button @click="[navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`), showNavBelajar = false]"
-              class="hover:text-primary text-lg font-medium" :class="{'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1}">{{ bab.judul }}</button>
+            <button 
+              @click="[
+                navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`),
+                showNavBelajar = false,
+                gantiBab(bab.judul),
+                gantiSubbab('')
+              ]"
+              class="hover:text-primary text-lg font-medium" 
+              :class="{ 'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1 }"
+              >
+              {{ bab.judul }}
+            </button>
             <div class="ml-2 flex flex-col mt-0.5 gap-1">
               <button
                 class="hover:text-primary text-start" 
-                :class="{'text-primary': route.params.bab[1] == replaceSpacesWithDash(subbab.judul.toLowerCase())}" 
-                @click="[navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`), showNavBelajar = false]" 
+                :class="{ 'text-primary': route.params.bab[1] == replaceSpacesWithDash(subbab.judul.toLowerCase()) }" 
+                @click="[
+                  navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`),
+                  showNavBelajar = false,
+                  gantiBab(bab.judul),
+                  gantiSubbab(subbab.judul)
+                ]" 
                 v-for="subbab in bab.sub_bab" 
                 :key="subbab.judul"
                 >
-                {{ subbab.judul}}
+                {{ subbab.judul }}
               </button>
             </div>
           </div>
@@ -84,12 +149,14 @@
 import type { Database } from '~/types/database.types'
 import { capitalizeFirstLetter } from '~/utils/capitalizeFirstLetter';
 import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
+
 const route = useRoute()
 const client = useSupabaseClient<Database>()
-
+const useCurBaborSubbab = useMyCurBaborSubbabStore()
+const { curBaborSubbab } = storeToRefs(useCurBaborSubbab)
+const { gantiBab, gantiSubbab } = useCurBaborSubbab
 const semuaBab = ref<Bab[] | undefined>()
 const curMapel = ref<Mapel | undefined>()
-const curBaborSubbab = ref('')
 const showNavBelajar = ref(false)
 const { width } = useWindowSize()
 const isMobile = computed(() => width.value < 768)

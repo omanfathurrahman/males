@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-[4rem] py-6 space-y-2 px-[1rem] sm:px-[6rem] ">
+  <div class="mt-[4rem] py-6 space-y-2 px-[1rem] sm:px-[6rem] min-h-[83vh]">
     <NuxtLink to="/daftar-mata-pelajaran" class="flex items-center gap-3 border w-fit px-5 py-1.5 rounded-md *:text-slate-500">
       <Icon name="material-symbols:arrow-back-rounded" class="text-xl cursor-pointer" />
       <h1 class="text-base">Daftar Mata Pelajaran</h1>
@@ -22,24 +22,37 @@
         kelas {{ i }}
       </button>
     </div>
-    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3 pt-3" v-if="curBab">
-      <NuxtLink :to="`/belajar/${curMapel?.nama.toLowerCase()}/${replaceSpacesWithDash(mupel.judul.toLowerCase())}`" class="border shadow-m rounded-lg px-5 py-3 cursor-pointer" v-for="mupel of curBab" :key="mupel.id">
-        <!-- <Icon :name="mapel.icon!" class="text-4xl mb-1" :style="{'color': mapel.tailwind_color!}" /> -->
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3 pt-3" v-if="curBab?.length !== 0">
+      <button 
+        @click="[
+          navigateTo(`/belajar/${curMapel?.nama.toLowerCase()}/${replaceSpacesWithDash(mupel.judul.toLowerCase())}`),
+          gantiBab(mupel.judul)
+        ]" 
+        class="border shadow-m rounded-lg px-5 py-3 cursor-pointer flex flex-col" 
+        v-for="mupel of curBab" 
+        :key="mupel.id"
+        >
         <h4 class="text-xl font-medium">{{ mupel.judul }}</h4>
-        <div class="">
+        <div class="flex flex-col items-start">
           <p 
             v-for="subBab of mupel.sub_bab"
             class="text-sm text-gray-500"
           >- {{ subBab.judul }}</p>
         </div>
-      </NuxtLink>
+      </button>
     </div>
+    <p v-else class="py-[3rem] text-2xl">
+      Yahh belum ada muatan pelajaran untuk kelas {{ curKelas }} 😢
+    </p>
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { Database } from '~/types/database.types'
 import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
+import { useMyCurBaborSubbabStore } from '~/stores/curBaborSubbab'
+
+const { gantiBab } = useMyCurBaborSubbabStore()
 const route = useRoute()
 const client = useSupabaseClient<Database>()
 
@@ -48,7 +61,7 @@ const curMapel = ref<Mapel | undefined>()
 
 const getDetailMapel = async () => {
   try {
-    const { data, error } = await client.from('mata_pelajaran').select().eq('nama', route.params.mapel).limit(1).single()
+    const { data, error } = await client.from('mata_pelajaran').select().eq('path', route.params.mapel).limit(1).single()
     if (error) throw error
     curMapel.value = data
   } catch (error) {
@@ -58,17 +71,17 @@ const getDetailMapel = async () => {
 const getMuatanPelajaran = async (mataPelajaranId: Number) => {
   try {
     const { data, error } = await client
-                                    .from('bab')
-                                    .select(`
-                                      id,
-                                      judul,
-                                      kelas,
-                                      mata_pelajaran_id,
-                                      sub_bab (
-                                        judul
-                                      )
-                                    `)
-                                    .eq('mata_pelajaran_id', mataPelajaranId).eq('kelas', curKelas.value)
+      .from('bab')
+      .select(`
+        id,
+        judul,
+        kelas,
+        mata_pelajaran_id,
+        sub_bab (
+          judul
+        )
+      `)
+      .eq('mata_pelajaran_id', mataPelajaranId).eq('kelas', curKelas.value)
     if (error) throw error
     curBab.value = data
   } catch (error) {
@@ -104,12 +117,12 @@ interface Mapel {
   tailwind_color: string;
 }
 interface Bab {
-    id: number;
+  id: number;
+  judul: string;
+  kelas: "10" | "11" | "12";
+  mata_pelajaran_id: number;
+  sub_bab: {
     judul: string;
-    kelas: "10" | "11" | "12";
-    mata_pelajaran_id: number;
-    sub_bab: {
-        judul: string;
-    }[];
+  }[];
 }
 </script>

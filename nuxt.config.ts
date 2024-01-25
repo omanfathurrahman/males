@@ -15,11 +15,13 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/supabase",
     "@nuxt/content",
-    "@nuxthq/studio"
+    "@nuxthq/studio",
+    "@nuxt/image"
   ],
   googleFonts: {
     families: {
       Montserrat: true,
+      "Gloria Hallelujah": true
     }
   },
   plugins: ["~/plugins/preline.client.ts"],
