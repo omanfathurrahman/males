@@ -57,7 +57,7 @@ const getDetailMapel = async () => {
 const getMuatanPelajaran = async (mataPelajaranId: Number) => {
   try {
     const { data, error } = await client
-                                    .from('muatan_pelajaran')
+                                    .from('bab')
                                     .select(`
                                       id,
                                       judul,

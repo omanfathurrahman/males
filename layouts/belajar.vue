@@ -1,6 +1,11 @@
 <template>
   <div>
-    <slot />
+    <Header />
+    <div class="mt-[4rem] flex">
+      <BelajarSidebar />
+      <slot />
+    </div>
+    <Footer />
   </div>
 </template>
 
