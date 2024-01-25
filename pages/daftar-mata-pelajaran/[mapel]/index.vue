@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-[4rem] py-6 space-y-2">
+  <div class="mt-[4rem] py-6 space-y-2 px-[1rem] sm:px-[6rem] ">
     <NuxtLink to="/daftar-mata-pelajaran" class="flex items-center gap-3 border w-fit px-5 py-1.5 rounded-md *:text-slate-500">
       <Icon name="material-symbols:arrow-back-rounded" class="text-xl cursor-pointer" />
       <h1 class="text-base">Daftar Mata Pelajaran</h1>
@@ -23,7 +23,7 @@
       </button>
     </div>
     <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3 pt-3" v-if="curBab">
-      <div class="border shadow-m rounded-lg px-5 py-3 cursor-pointer" v-for="mupel of curBab" :key="mupel.id" @click="navigateTo('/belajar')">
+      <NuxtLink :to="`/belajar/${curMapel?.nama.toLowerCase()}/${replaceSpacesWithDash(mupel.judul.toLowerCase())}`" class="border shadow-m rounded-lg px-5 py-3 cursor-pointer" v-for="mupel of curBab" :key="mupel.id">
         <!-- <Icon :name="mapel.icon!" class="text-4xl mb-1" :style="{'color': mapel.tailwind_color!}" /> -->
         <h4 class="text-xl font-medium">{{ mupel.judul }}</h4>
         <div class="">
@@ -32,13 +32,14 @@
             class="text-sm text-gray-500"
           >- {{ subBab.judul }}</p>
         </div>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { Database } from '~/types/database.types'
+import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
 const route = useRoute()
 const client = useSupabaseClient<Database>()
 
@@ -103,10 +104,10 @@ interface Mapel {
   tailwind_color: string;
 }
 interface Bab {
-    id: any;
-    judul: any;
-    kelas: any;
-    mata_pelajaran_id: any;
+    id: number;
+    judul: string;
+    kelas: "10" | "11" | "12";
+    mata_pelajaran_id: number;
     sub_bab: {
         judul: string;
     }[];

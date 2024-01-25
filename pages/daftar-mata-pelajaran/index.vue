@@ -19,7 +19,7 @@ const semuaMapel = await semuaMataPelajaran()
 </script>
 
 <template>
-  <div class="flex flex-col py-[1rem] gap-4 mt-[4rem] min-h-[83vh]">
+  <div class="flex flex-col py-[1rem] gap-4 mt-[4rem] min-h-[83vh] px-[1rem] sm:px-[6rem] ">
     <div class="">
       <h2 class="text-2xl mb-2">Daftar Mata Pelajaran</h2>
       <p>Pilih mata pelajaran yang menarik dan bermanfaat untuk masa depanmu!</p>
