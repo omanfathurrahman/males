@@ -1,10 +1,19 @@
 <template>
-  <div class="flex flex-col bg-slate-100 px-8 py-3 divide-y-2 space-y-4" :class="{'h-full': (showNavBelajar || !isMobile) }">
-    <div class="flex items-center gap-5">
-      <button class="" @click="showNavBelajar = !showNavBelajar" v-if="isMobile">
-        <Icon name="ci:hamburger-lg" class="text-lg" />
-      </button>
-      <h1 class="text-xl font-semibold">{{ curMapel?.nama }}</h1>
+  <div class="flex flex-col bg-slate-100 px-8 py-3 divide-y-2 space-y-4 z-10" :class="{'h-full': (showNavBelajar || !isMobile) }">
+    <div class="flex md:flex-col flex-col gap-5 mt-3 md:mt-6">
+      <NuxtLink>
+        <img src="/logo.svg" />
+      </NuxtLink>
+      <div class="flex gap-5 items-center">
+        <button class="" @click="showNavBelajar = !showNavBelajar" v-if="isMobile">
+          <Icon name="ci:hamburger-lg" class="text-lg" />
+        </button>
+        <div class="flex items-center gap-1">
+          <h1 class="text-xl font-semibold">{{ curMapel?.nama }}</h1>
+          <p>/</p>
+          <h2>{{  }}</h2>
+        </div>
+      </div>
     </div>
     <div class="divide-y-2 space-y-3" v-show="(showNavBelajar || !isMobile)">
       <div class="">
@@ -80,7 +89,8 @@ const client = useSupabaseClient<Database>()
 
 const semuaBab = ref<Bab[] | undefined>()
 const curMapel = ref<Mapel | undefined>()
-const showNavBelajar = ref(true)
+const curBaborSubbab = ref('')
+const showNavBelajar = ref(false)
 const { width } = useWindowSize()
 const isMobile = computed(() => width.value < 768)
 

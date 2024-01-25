@@ -29,14 +29,14 @@ watch(y, () => {
       <img src="/logo.svg" alt="">
     </NuxtLink>
 
-    <div class="relative" v-show="isMobile">
+    <div class="relative z-[51]" v-show="isMobile">
       <button class="flex flex-col gap-1" @click="toggleNav()" ref="targetIgnore">
         <div class="w-[1.5rem] h-[3px] bg-black rounded-md"></div>
         <div class="w-[1.5rem] h-[3px] bg-black rounded-md"></div>
         <div class="w-[1.5rem] h-[3px] bg-black rounded-md"></div>
       </button>
       <div
-        class="flex flex-col absolute bg-white space-y-1 w-[12rem] shadow-lg rounded-md overflow-hidden py-2 px-2 transition-all duration-300 ease-in-out top-14"
+        class="flex flex-col absolute bg-white space-y-1 w-[12rem] shadow-lg rounded-md overflow-hidden py-2 px-2 transition-all duration-300 ease-in-out top-14 z-[51]"
         :class="showNav ? 'right-1' : 'right-[-20rem]'" ref="target">
         <button @click="[navigateTo('/'), closeNav()]" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Home</button>
         <button @click="[navigateTo('/daftar-mata-pelajaran'), closeNav()]"
