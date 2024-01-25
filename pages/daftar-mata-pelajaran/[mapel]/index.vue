@@ -1,5 +1,9 @@
 <template>
-  <div class="mt-[4rem] py-6 space-y-2">
+  <div class="mt-[4rem] py-6 space-y-2 px-[1rem] sm:px-[6rem] ">
+    <NuxtLink to="/daftar-mata-pelajaran" class="flex items-center gap-3 border w-fit px-5 py-1.5 rounded-md *:text-slate-500">
+      <Icon name="material-symbols:arrow-back-rounded" class="text-xl cursor-pointer" />
+      <h1 class="text-base">Daftar Mata Pelajaran</h1>
+    </NuxtLink>
     <div class="flex flex-col md:flex-row md:items-center gap-3">
       <Icon :name="(curMapel?.icon! as string)" class="md:size-[8rem] size-[5rem]" :style="{ color: curMapel.tailwind_color }"
         v-if="curMapel" />
@@ -18,27 +22,28 @@
         kelas {{ i }}
       </button>
     </div>
-    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3 pt-3" v-if="curMuatanPelajaran">
-      <div class="border shadow-m rounded-lg px-5 py-3 cursor-pointer" v-for="mupel of curMuatanPelajaran" :key="mupel.id" >
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3 pt-3" v-if="curBab">
+      <NuxtLink :to="`/belajar/${curMapel?.nama.toLowerCase()}/${replaceSpacesWithDash(mupel.judul.toLowerCase())}`" class="border shadow-m rounded-lg px-5 py-3 cursor-pointer" v-for="mupel of curBab" :key="mupel.id">
         <!-- <Icon :name="mapel.icon!" class="text-4xl mb-1" :style="{'color': mapel.tailwind_color!}" /> -->
         <h4 class="text-xl font-medium">{{ mupel.judul }}</h4>
         <div class="">
           <p 
-            v-for="subMupel of mupel.sub_muatan_pelajaran"
+            v-for="subBab of mupel.sub_bab"
             class="text-sm text-gray-500"
-          >- {{ subMupel.judul }}</p>
+          >- {{ subBab.judul }}</p>
         </div>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { Database } from '~/types/database.types'
+import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
 const route = useRoute()
 const client = useSupabaseClient<Database>()
 
-const curMuatanPelajaran = ref<Mupel[] | undefined>()
+const curBab = ref<Bab[] | undefined>()
 const curMapel = ref<Mapel | undefined>()
 
 const getDetailMapel = async () => {
@@ -53,19 +58,19 @@ const getDetailMapel = async () => {
 const getMuatanPelajaran = async (mataPelajaranId: Number) => {
   try {
     const { data, error } = await client
-                                    .from('muatan_pelajaran')
+                                    .from('bab')
                                     .select(`
                                       id,
                                       judul,
                                       kelas,
                                       mata_pelajaran_id,
-                                      sub_muatan_pelajaran (
+                                      sub_bab (
                                         judul
                                       )
                                     `)
                                     .eq('mata_pelajaran_id', mataPelajaranId).eq('kelas', curKelas.value)
     if (error) throw error
-    curMuatanPelajaran.value = data
+    curBab.value = data
   } catch (error) {
     console.log(error)
   }
@@ -80,7 +85,7 @@ const curKelas = ref<number>(10)
 onMounted(async () => {
   await getDetailMapel()
   await getMuatanPelajaran(curMapel.value?.id!)
-  console.log(curMuatanPelajaran.value)
+  console.log(curBab.value)
 
   useHead({
     title: curMapel?.value?.nama + ' | Males'
@@ -98,12 +103,12 @@ interface Mapel {
   nama: string;
   tailwind_color: string;
 }
-interface Mupel {
+interface Bab {
     id: number;
     judul: string;
     kelas: "10" | "11" | "12";
     mata_pelajaran_id: number;
-    sub_muatan_pelajaran: {
+    sub_bab: {
         judul: string;
     }[];
 }
