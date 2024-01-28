@@ -24,7 +24,7 @@ watch(y, () => {
 
 <template>
   <div
-    class="flex justify-between items-center gap-24 px-[2rem] md:px-[6rem] border h-[4rem] w-full backdrop-blur-sm bg-opacity-20 bg-white">
+    class="flex justify-between items-center gap-24 px-[2rem] md:px-[6rem] border h-[4rem] w-full backdrop-blur-sm bg-opacity-15 bg-white">
     <NuxtLink to="/" class="cursor-pointer">
       <img src="/logo.svg" alt="">
     </NuxtLink>
@@ -38,11 +38,30 @@ watch(y, () => {
       <div
         class="flex flex-col absolute bg-white space-y-1 w-[12rem] shadow-lg rounded-md overflow-hidden py-2 px-2 transition-all duration-300 ease-in-out top-14 z-[51]"
         :class="showNav ? 'right-1' : 'right-[-20rem]'" ref="target">
-        <button @click="[navigateTo('/'), closeNav()]" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Home</button>
-        <button @click="[navigateTo('/daftar-mata-pelajaran'), closeNav()]"
-          class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Mapel</button>
-        <button @click="[navigateTo('/tentang-kami'), closeNav()]" class="text-center py-2 w-full hover:bg-slate-100 rounded-md">Tentang
-          kami</button>
+        <button 
+          @click="[
+            navigateTo('/'), 
+            closeNav()
+          ]" 
+          class="text-center py-2 w-full hover:bg-slate-100 rounded-md"
+          >Home
+        </button>
+        <button 
+          @click="[
+            navigateTo('/daftar-mata-pelajaran'), 
+            closeNav()
+          ]"
+          class="text-center py-2 w-full hover:bg-slate-100 rounded-md"
+          >Mapel
+        </button>
+        <button 
+          @click="[
+            navigateTo('/tentang-kami'), 
+            closeNav()
+          ]" 
+          class="text-center py-2 w-full hover:bg-slate-100 rounded-md"
+          >Tentang kami
+        </button>
       </div>
     </div>
 
