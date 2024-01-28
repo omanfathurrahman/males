@@ -20,14 +20,14 @@
               ]"
               >{{ curMapel?.nama }}</span> / 
             <span 
-              :class="curBaborSubbab[1] == '' ? 'font-semibold':'cursor-pointer'"
+              :class="curBaborSubbab[1] == '' ? 'font-semibold' : 'cursor-pointer'"
               @click="
                 curBaborSubbab[1] != '' ? [
                   navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(curBaborSubbab[0].toLowerCase())}`),
                   showNavBelajar = false,
                   gantiBab(curBaborSubbab[0]),
                   gantiSubbab('')
-                ]: null"
+                ] : null"
             >
               {{ curBaborSubbab[0] }}
             </span> 
@@ -81,10 +81,11 @@
         <div class="flex flex-col gap-2" v-if="babPerKelas['11']">
           <div class="" v-for="bab in babPerKelas['11']">
             <button 
-              @click="[navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`),
-              showNavBelajar = false,
-              gantiBab(bab.judul),
-              gantiSubbab('')
+              @click="[
+                navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`),
+                showNavBelajar = false,
+                gantiBab(bab.judul),
+                gantiSubbab('')
               ]"
               class="hover:text-primary text-lg font-medium" :class="{ 'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1 }">{{ bab.judul }}</button>
             <div class="ml-2 flex flex-col mt-0.5 gap-1">
@@ -150,21 +151,24 @@ import type { Database } from '~/types/database.types'
 import { capitalizeFirstLetter } from '~/utils/capitalizeFirstLetter';
 import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
 
-const route = useRoute()
-const client = useSupabaseClient<Database>()
-const useCurBaborSubbab = useMyCurBaborSubbabStore()
-const { curBaborSubbab } = storeToRefs(useCurBaborSubbab)
-const { gantiBab, gantiSubbab } = useCurBaborSubbab
-const semuaBab = ref<Bab[] | undefined>()
-const curMapel = ref<Mapel | undefined>()
-const showNavBelajar = ref(false)
+const route = useRoute() // alamat url
+const client = useSupabaseClient<Database>() // client supabase
+const useCurBaborSubbab = useMyCurBaborSubbabStore() 
 const { width } = useWindowSize()
-const isMobile = computed(() => width.value < 768)
 
+const { curBaborSubbab } = storeToRefs(useCurBaborSubbab) // bab atau sub bab halaman yang dibuka
+const { gantiBab, gantiSubbab } = useCurBaborSubbab // fungsi untuk mengganti bab atau subbab
+const semuaBab = ref<Bab[] | undefined>() // daftar semua bab
+const curMapel = ref<Mapel | undefined>() // mata pelajaran saat ini
+const showNavBelajar = ref(false) // ref navigasi belajar
+const isMobile = computed(() => width.value < 768) // mengecek apakah perangkat yang digunakan mobile atau bukan
+
+// membagi bab perkelas
 const babPerKelas: globalThis.Ref<{
-  [kelas: string]: Bab[];
+  [kelas: string]: Bab[]
 }> = ref<{ [kelas: string]: Bab[] }>({});
 
+// fungsi untuk membagi bab perkelas
 watch(semuaBab, () => {
   semuaBab.value?.forEach((item) => {
     if (!babPerKelas.value[item.kelas]) {
@@ -173,6 +177,8 @@ watch(semuaBab, () => {
     babPerKelas.value[item.kelas].push(item);
   });
 })
+
+// mengambil detail mata pelajaran saat ini
 const getDetailMapel = async () => {
   try {
     const { data, error } = await client.from('mata_pelajaran').select().eq('nama', capitalizeFirstLetter(route.params.mapel as string)).limit(1).single()
@@ -182,6 +188,8 @@ const getDetailMapel = async () => {
     console.log(error)
   }
 }
+
+// mengambil bab-bab yang ada pada pelajaran saat ini
 const getBab = async (mataPelajaranId: Number) => {
   try {
     const { data, error } = await client
@@ -197,7 +205,6 @@ const getBab = async (mataPelajaranId: Number) => {
       `).eq('mata_pelajaran_id', mataPelajaranId)
     if (error) throw error
     semuaBab.value = data
-    console.log(semuaBab.value)
   } catch (error) {
     console.log(error)
   }
