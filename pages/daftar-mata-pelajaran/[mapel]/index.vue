@@ -26,7 +26,9 @@
       <button 
         @click="[
           navigateTo(`/belajar/${curMapel?.nama.toLowerCase()}/${replaceSpacesWithDash(mupel.judul.toLowerCase())}`),
-          gantiBab(mupel.judul)
+          gantiBab(mupel.judul),
+          gantiSubbab(''),
+          
         ]" 
         class="border shadow-m rounded-lg px-5 py-3 cursor-pointer flex flex-col" 
         v-for="mupel of curBab" 
@@ -52,7 +54,7 @@ import type { Database } from '~/types/database.types'
 import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
 import { useMyCurBaborSubbabStore } from '~/stores/curBaborSubbab'
 
-const { gantiBab } = useMyCurBaborSubbabStore()
+const { gantiBab, gantiSubbab } = useMyCurBaborSubbabStore()
 const route = useRoute()
 const client = useSupabaseClient<Database>()
 

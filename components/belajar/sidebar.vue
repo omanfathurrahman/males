@@ -4,6 +4,7 @@
       <NuxtLink to="/">
         <img src="/logo.svg" />
       </NuxtLink>
+      {{ curBaborSubbab }}
       <div class="flex gap-5 items-center">
         <button class="" @click="showNavBelajar = !showNavBelajar" v-if="isMobile">
           <Icon name="ci:hamburger-lg" class="text-lg" />
