@@ -66,9 +66,9 @@ watch(y, () => {
     </div>
 
     <div class="flex gap-8" v-show="!isMobile">
-      <button @click="navigateTo('/')">Home</button>
-      <button @click="navigateTo('/daftar-mata-pelajaran')">Mapel</button>
-      <button @click="navigateTo('/tentang-kami')">Tentang Kami</button>
+      <button class="" @click="navigateTo('/')">Home</button>
+      <button class="" @click="navigateTo('/daftar-mata-pelajaran')">Mapel</button>
+      <button class="" @click="navigateTo('/tentang-kami')">Tentang Kami</button>
     </div>
   </div>
 </template>

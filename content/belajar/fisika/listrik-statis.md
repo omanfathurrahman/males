@@ -1,3 +1,0 @@
-listrik statis
-
-## tes
