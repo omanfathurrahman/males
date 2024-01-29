@@ -15,18 +15,21 @@ export interface Database {
           judul: string
           kelas: Database["public"]["Enums"]["kelas"]
           mata_pelajaran_id: number
+          path_text: string
         }
         Insert: {
           id?: number
           judul: string
           kelas: Database["public"]["Enums"]["kelas"]
           mata_pelajaran_id: number
+          path_text?: string
         }
         Update: {
           id?: number
           judul?: string
           kelas?: Database["public"]["Enums"]["kelas"]
           mata_pelajaran_id?: number
+          path_text?: string
         }
         Relationships: [
           {
@@ -44,7 +47,7 @@ export interface Database {
           icon: string | null
           id: number
           nama: string
-          path: string | null
+          path_text: string | null
           tailwind_color: string
         }
         Insert: {
@@ -52,7 +55,7 @@ export interface Database {
           icon?: string | null
           id?: number
           nama: string
-          path?: string | null
+          path_text?: string | null
           tailwind_color?: string
         }
         Update: {
@@ -60,7 +63,7 @@ export interface Database {
           icon?: string | null
           id?: number
           nama?: string
-          path?: string | null
+          path_text?: string | null
           tailwind_color?: string
         }
         Relationships: []
@@ -70,16 +73,19 @@ export interface Database {
           bab_id: number
           id: number
           judul: string
+          path_text: string | null
         }
         Insert: {
           bab_id: number
           id?: number
           judul: string
+          path_text?: string | null
         }
         Update: {
           bab_id?: number
           id?: number
           judul?: string
+          path_text?: string | null
         }
         Relationships: [
           {

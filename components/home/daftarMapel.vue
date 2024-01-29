@@ -21,7 +21,7 @@ const semuaMapel = await semuaMataPelajaran()
       <h2 class="text-3xl">Daftar Mata Pelajaran</h2>
       <p>Apa yang kamu sukai? Apakah kamu tertarik pada ilmu alam, matematika, bahasa, seni, atau olahraga?</p>
     </div>
-    <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-2 z-40 p-5 whitespace-nowrap">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 z-40 p-5 whitespace-nowrap">
       <div 
         class="border bg-white flex flex-col w-full items-center shadow-m rounded-2xl px-5 py-3 cursor-pointer transition-shadow duration-300 hover:shadow-md" 
         v-for="mapel of semuaMapel" 

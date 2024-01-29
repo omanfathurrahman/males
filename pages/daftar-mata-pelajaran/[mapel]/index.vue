@@ -24,10 +24,7 @@
     </div>
     <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-5 gap-y-3 pt-3" v-if="curBab?.length !== 0">
       <button 
-        @click="[
-          navigateTo(`/belajar/${curMapel?.nama.toLowerCase()}/${replaceSpacesWithDash(mupel.judul.toLowerCase())}`),
-          gantiBab(mupel.judul)
-        ]" 
+        @click="navigateTo(`/belajar/${curMapel?.nama.toLowerCase()}/${replaceSpacesWithDash(mupel.judul.toLowerCase())}`)" 
         class="border shadow-m rounded-lg px-5 py-3 cursor-pointer flex flex-col" 
         v-for="mupel of curBab" 
         :key="mupel.id"
@@ -50,9 +47,7 @@
 <script lang="ts" setup>
 import type { Database } from '~/types/database.types'
 import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
-import { useMyCurBaborSubbabStore } from '~/stores/curBaborSubbab'
 
-const { gantiBab } = useMyCurBaborSubbabStore()
 const route = useRoute()
 const client = useSupabaseClient<Database>()
 
@@ -61,7 +56,7 @@ const curMapel = ref<Mapel | undefined>()
 
 const getDetailMapel = async () => {
   try {
-    const { data, error } = await client.from('mata_pelajaran').select().eq('path', route.params.mapel).limit(1).single()
+    const { data, error } = await client.from('mata_pelajaran').select().eq('path_text', route.params.mapel).limit(1).single()
     if (error) throw error
     curMapel.value = data
   } catch (error) {
@@ -98,7 +93,6 @@ const curKelas = ref<number>(10)
 onMounted(async () => {
   await getDetailMapel()
   await getMuatanPelajaran(curMapel.value?.id!)
-  console.log(curBab.value)
 
   useHead({
     title: curMapel?.value?.nama + ' | Males'
@@ -114,6 +108,7 @@ interface Mapel {
   icon: string | null;
   id: number;
   nama: string;
+  path_text: string | null;
   tailwind_color: string;
 }
 interface Bab {

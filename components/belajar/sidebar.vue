@@ -15,25 +15,24 @@
               @click="[
                 navigateTo(`/daftar-mata-pelajaran/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}`),
                 showNavBelajar = false,
-                gantiBab(''),
-                gantiSubbab('')
+                GetCurBaborSubbab()
               ]"
-              >{{ curMapel?.nama }}</span> / 
+              >{{ curMapel?.nama }}
+            </span>
+            / 
             <span 
-              :class="curBaborSubbab[1] == '' ? 'font-semibold' : 'cursor-pointer'"
-              @click="
-                curBaborSubbab[1] != '' ? [
-                  navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(curBaborSubbab[0].toLowerCase())}`),
-                  showNavBelajar = false,
-                  gantiBab(curBaborSubbab[0]),
-                  gantiSubbab('')
-                ] : null"
-            >
-              {{ curBaborSubbab[0] }}
-            </span> 
-            <span v-if="curBaborSubbab[1] != ''"> / <br> 
+              :class="!curBaborSubbab![1] ? 'font-semibold' : 'cursor-pointer'"
+              @click="[
+                navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(curBaborSubbab![0].toLowerCase())}`),
+                showNavBelajar = false,
+                GetCurBaborSubbab()
+              ]"
+            > {{ curBaborSubbab![0] }}
+            </span>
+            <span v-if="curBaborSubbab![1]">
+            / <br>
               <span class="font-semibold">
-                {{ curBaborSubbab[1] }}
+                {{ curBaborSubbab![1] }}
               </span>
             </span>
           </h1>
@@ -49,8 +48,7 @@
               @click="[
                 navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`),
                 showNavBelajar = false,
-                gantiBab(bab.judul),
-                gantiSubbab('')
+                GetCurBaborSubbab()
               ]"
               class="hover:text-primary text-lg font-medium" 
               :class="{ 'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1 }"
@@ -64,8 +62,7 @@
                 @click="[
                   navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`),
                   showNavBelajar = false,
-                  gantiBab(bab.judul),
-                  gantiSubbab(subbab.judul)
+                  GetCurBaborSubbab()
                 ]" 
                 v-for="subbab in bab.sub_bab" 
                 :key="subbab.judul"
@@ -84,8 +81,7 @@
               @click="[
                 navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`),
                 showNavBelajar = false,
-                gantiBab(bab.judul),
-                gantiSubbab('')
+                GetCurBaborSubbab()
               ]"
               class="hover:text-primary text-lg font-medium" :class="{ 'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1 }">{{ bab.judul }}</button>
             <div class="ml-2 flex flex-col mt-0.5 gap-1">
@@ -95,8 +91,7 @@
                 @click="[
                   navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`),
                   showNavBelajar = false,
-                  gantiBab(subbab.judul),
-                  gantiSubbab(subbab.judul)
+                  GetCurBaborSubbab()
                 ]" 
                 v-for="subbab in bab.sub_bab" 
                 :key="subbab.judul"
@@ -115,8 +110,7 @@
               @click="[
                 navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}`),
                 showNavBelajar = false,
-                gantiBab(bab.judul),
-                gantiSubbab('')
+                GetCurBaborSubbab()
               ]"
               class="hover:text-primary text-lg font-medium" 
               :class="{ 'text-primary': route.params.bab[0] == replaceSpacesWithDash(bab!.judul.toLowerCase()) && route.params.bab.length == 1 }"
@@ -130,8 +124,7 @@
                 @click="[
                   navigateTo(`/belajar/${replaceSpacesWithDash(curMapel!.nama.toLowerCase())}/${replaceSpacesWithDash(bab.judul.toLowerCase())}/${replaceSpacesWithDash(subbab.judul.toLowerCase())}`),
                   showNavBelajar = false,
-                  gantiBab(bab.judul),
-                  gantiSubbab(subbab.judul)
+                  GetCurBaborSubbab()
                 ]" 
                 v-for="subbab in bab.sub_bab" 
                 :key="subbab.judul"
@@ -153,15 +146,32 @@ import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
 
 const route = useRoute() // alamat url
 const client = useSupabaseClient<Database>() // client supabase
-const useCurBaborSubbab = useMyCurBaborSubbabStore() 
 const { width } = useWindowSize()
-
-const { curBaborSubbab } = storeToRefs(useCurBaborSubbab) // bab atau sub bab halaman yang dibuka
-const { gantiBab, gantiSubbab } = useCurBaborSubbab // fungsi untuk mengganti bab atau subbab
 const semuaBab = ref<Bab[] | undefined>() // daftar semua bab
 const curMapel = ref<Mapel | undefined>() // mata pelajaran saat ini
 const showNavBelajar = ref(false) // ref navigasi belajar
 const isMobile = computed(() => width.value < 768) // mengecek apakah perangkat yang digunakan mobile atau bukan
+const curBaborSubbab = ref<string[] | undefined>([]) // bab dan subbab saat ini
+
+watch(route.params, async () => {
+  await GetCurBaborSubbab()
+})
+
+const GetCurBaborSubbab = async () => {
+  try {
+    const { data: curBab, error } = await client.from('bab').select('judul').eq('path_text', route.params.bab[0]).limit(1).single()
+    if (error) throw error
+    if (route.params.bab.length > 1) {
+      const { data: curSubbab, error } = await client.from('sub_bab').select('judul').eq('path_text', route.params.bab[1]).limit(1).single()
+      if (error) throw error
+      curBaborSubbab.value = [curBab.judul, curSubbab.judul]
+      return
+    }
+    curBaborSubbab.value = [curBab.judul]
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // membagi bab perkelas
 const babPerKelas: globalThis.Ref<{
@@ -213,6 +223,8 @@ const getBab = async (mataPelajaranId: Number) => {
 onMounted(async () => {
   await getDetailMapel()
   await getBab(curMapel.value?.id!)
+  await GetCurBaborSubbab()
+  console.log(curBaborSubbab.value)
 })
 
 interface Mapel {
