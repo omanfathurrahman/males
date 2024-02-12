@@ -51,7 +51,67 @@ import { replaceSpacesWithDash } from '~/utils/replaceSpacesWithDash';
 const route = useRoute()
 const client = useSupabaseClient<Database>()
 
-const curBab = ref<Bab[] | undefined>()
+const curBab: {
+  id: number;
+  judul: string;
+  kelas: "10" | "11" | "12";
+  mata_pelajaran_id: number;
+  sub_bab: {
+    judul: string;
+  }[];
+}[] = [
+  {
+    id: 1,
+    judul: "Bab 1",
+    kelas: "10",
+    mata_pelajaran_id: 1,
+    sub_bab: [
+      {
+        judul: "Subbab 1",
+      },
+      {
+        judul: "Subbab 2",
+      },
+      {
+        judul: "Subbab 3",
+      },
+    ],
+  },
+  {
+    id: 2,
+    judul: "Bab 2",
+    kelas: "10",
+    mata_pelajaran_id: 1,
+    sub_bab: [
+      {
+        judul: "Subbab 1",
+      },
+      {
+        judul: "Subbab 2",
+      },
+      {
+        judul: "Subbab 3",
+      },
+    ],
+  },
+  {
+    id: 3,
+    judul: "Bab 3",
+    kelas: "10",
+    mata_pelajaran_id: 1,
+    sub_bab: [
+      {
+        judul: "Subbab 1",
+      },
+      {
+        judul: "Subbab 2",
+      },
+      {
+        judul: "Subbab 3",
+      },
+    ],
+  },
+];
 const curMapel = ref<Mapel | undefined>()
 
 const getDetailMapel = async () => {
@@ -63,26 +123,7 @@ const getDetailMapel = async () => {
     console.log(error)
   }
 }
-const getMuatanPelajaran = async (mataPelajaranId: Number) => {
-  try {
-    const { data, error } = await client
-      .from('bab')
-      .select(`
-        id,
-        judul,
-        kelas,
-        mata_pelajaran_id,
-        sub_bab (
-          judul
-        )
-      `)
-      .eq('mata_pelajaran_id', mataPelajaranId).eq('kelas', curKelas.value)
-    if (error) throw error
-    curBab.value = data
-  } catch (error) {
-    console.log(error)
-  }
-}
+
 
 const kelas = [
   10, 11, 12
@@ -92,15 +133,10 @@ const curKelas = ref<number>(10)
 
 onMounted(async () => {
   await getDetailMapel()
-  await getMuatanPelajaran(curMapel.value?.id!)
 
   useHead({
     title: curMapel?.value?.nama + ' | Males'
   })
-})
-
-watch(curKelas, () => {
-  getMuatanPelajaran(curMapel.value?.id!)
 })
 
 interface Mapel {

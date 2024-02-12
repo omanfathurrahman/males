@@ -34,6 +34,10 @@ watch(roketHover, (val) => {
     roketHover.value = false
   }, 5000)
 })
+useHead({
+  title: "Tentang Kami | Males"
+})
+
 </script>
 
 <style scoped>

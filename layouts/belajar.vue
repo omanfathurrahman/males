@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col overflow-hidden">
-    <div class="flex flex-col md:flex-row min-h-screen">
-      <div class="w-screen md:w-fit">
+    <div class="flex flex-col md:flex-row lg:overflow-auto lg:max-h-screen-[calc(100vh+8rem)]">
+      <div class="w-screen md:w-fit sticky top-0">
         <BelajarSidebar class="md:w-[18rem] sticky top-0 w-screen" />
       </div>
       <!-- <div class="w-full">p</div> -->
-      <div class="w-full px-[2rem] py-[1rem] min-h-[92vh]">
+      <div class="w-full">
         <slot />
       </div>
     </div>

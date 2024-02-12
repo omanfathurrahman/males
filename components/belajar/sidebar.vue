@@ -153,7 +153,9 @@ const showNavBelajar = ref(false) // ref navigasi belajar
 const isMobile = computed(() => width.value < 768) // mengecek apakah perangkat yang digunakan mobile atau bukan
 const curBaborSubbab = ref<string[] | undefined>([]) // bab dan subbab saat ini
 
-watch(route.params, async () => {
+const path = toRef(route.params, 'bab')
+
+watch(path, async () => {
   await GetCurBaborSubbab()
 })
 
@@ -224,7 +226,6 @@ onMounted(async () => {
   await getDetailMapel()
   await getBab(curMapel.value?.id!)
   await GetCurBaborSubbab()
-  console.log(curBaborSubbab.value)
 })
 
 interface Mapel {
